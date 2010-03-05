@@ -10,4 +10,5 @@ Feature: running the flow
     And I launch the flow at example_flows/a_to_b.rb
     When I get the first workitem of participant alpha
     Then I should have a workitem
+    And the process should have no errors
 

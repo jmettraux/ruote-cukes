@@ -1,0 +1,8 @@
+
+= CREDITS.txt
+
+John Mettraux - http://jmettraux.wordpress.com
+
+Nicholas Faiz - http://github.com/biv
+Kenneth Kalmer - http://github.com/kennethkalmer
+

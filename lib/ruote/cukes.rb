@@ -85,6 +85,14 @@ Given /I launch the flow at (.+)$/ do |path|
     Ruote::Cukes.launch_variables || {})
 end
 
+Given /I launch the flow$/ do |process_definition|
+
+  Ruote::Cukes.last_wfid = Ruote::Cukes.engine.launch(
+    process_definition,
+    Ruote::Cukes.launch_fields || {},
+    Ruote::Cukes.launch_variables || {})
+end
+
 
 #
 # PARTICIPANTS

@@ -129,11 +129,6 @@ end
 #
 # WORKITEMS
 
-Then /I should have a workitem/ do
-
-  assert_not_nil Ruote::Cukes.workitem
-end
-
 When /^I reply with the workitem$/ do
 
   Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
@@ -142,6 +137,19 @@ end
 When /^I update the workitem with$/ do |table|
 
   Ruote::Cukes.workitem.fields.merge!(table.to_hash)
+end
+
+When /^I reply$/ do
+
+  sleep 0.100 # give some time to the engine
+
+  Ruote::Cukes.storage_participant.reply(
+    Ruote::Cukes.storage_participant.all.first)
+end
+
+Then /I should have a workitem/ do
+
+  assert_not_nil Ruote::Cukes.workitem
 end
 
 Then /^the workitem (?:fields )?should include$/ do |table|
@@ -175,5 +183,15 @@ Then /^the process should reach (?:participant )?(.+)$/ do |pname|
   assert_not_nil Ruote::Cukes.storage_participant.all.find { |wi|
     wi.fei.wfid == Ruote::Cukes.last_wfid && wi.participant_name == pname
   }
+end
+
+Then /^the process should be over$/ do
+
+  # TODO : check that the process has RUN, the assertion is currently
+  #        OK with processes that never ran.
+
+  sleep 0.100 # give some time to the engine
+
+  assert_nil Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid)
 end
 

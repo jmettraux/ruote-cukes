@@ -106,7 +106,7 @@ Given /the catch[- ]?all participant is registered/ do
     # due to a bug in ruote 2.1.7, remove when 2.1.8 is out
 end
 
-Given /I get the first workitem of participant (.+)$/ do |pname|
+Given /I get the first workitem of (?:participant )?(.+)$/ do |pname|
 
   sleep 0.100 # give some time to the engine
 
@@ -137,7 +137,7 @@ Then /^the process should have no errors$/ do
   assert_equal [], Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid).errors
 end
 
-Then /^the process should reach (participant )?(.+)$/ do |_, pname|
+Then /^the process should reach (?:participant )?(.+)$/ do |pname|
 
   sleep 0.100 # give some time to the engine
 

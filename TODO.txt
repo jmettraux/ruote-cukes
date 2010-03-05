@@ -1,3 +1,4 @@
 
 [ ] something about participants
+[ ] use tables for field input
 

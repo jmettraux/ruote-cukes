@@ -47,6 +47,13 @@ module Ruote::Cukes
       super
     end
   end
+
+  def self.parse_json (s)
+
+    s = "{#{s}}" unless s.match(/^{.+}$/)
+
+    Rufus::Json.decode(s)
+  end
 end
 
 
@@ -65,16 +72,12 @@ end
 
 Given /the initial fields are (.+)$/ do |fields|
 
-  fields = "{#{fields}}" unless fields.match(/^{.+}$/)
-
-  Ruote::Cukes.launch_fields = Rufus::Json.decode(fields)
+  Ruote::Cukes.launch_fields = Ruote::Cukes.parse_json(fields)
 end
 
-Given /the initial variables are (.+)$/ do |vars|
+Given /the initial variables are (.+)$/ do |variables|
 
-  vars = "{#{vars}}" unless vars.match(/^{.+}$/)
-
-  Ruote::Cukes.launch_variables = Rufus::Json.decode(vars)
+  Ruote::Cukes.launch_variables = Ruote::Cukes.parse_json(variables)
 end
 
 Given /I launch the flow at (.+)$/ do |path|
@@ -127,6 +130,23 @@ When /^I reply with the workitem$/ do
 
   Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
 end
+
+When /^I update the workitem with (.+)$/ do |fields|
+
+  fields = Ruote::Cukes.parse_json(fields)
+
+  Ruote::Cukes.workitem.fields.merge!(fields)
+end
+
+Then /^the workitem (?:fields )?should include (.+)$/ do |fields|
+
+  fields = Ruote::Cukes.parse_json(fields)
+
+  assert_nil fields.find { |k, v|
+    Ruote::Cukes.workitem.fields[k] != v
+  }
+end
+
 
 
 #

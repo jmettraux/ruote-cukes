@@ -1,12 +1,12 @@
 
-Feature: when I launch...
+Feature: When I launch
 
-  A long time ago in a galaxy far, far away
+  of course, launch may be a Given or a When
 
   Scenario: from alpha to bravo
     Given I have a ruote engine
     And the catchall participant is registered
-    When I launch the flow at example_flows/a_to_b.rb
+    When I launch the flow at flows/a_to_b.rb
     Then the process should reach alpha
     And the process should reach participant alpha
 

@@ -1,12 +1,35 @@
 
 = ruote-cukes
 
-cucumber helpers (steps) for testing ruote process definitions and participants.
+Cucumber helpers (steps) for testing ruote process definitions and participants.
+
+  INSERT SAMPLE FEATURE HERE
+
+Look at features/ for the whole range of examples.
 
 
-== running the example
+== using them
 
-  cucumber example_features/
+  gem install ruote-cukes
+
+then make sure to include
+
+  require 'ruote-cukes'
+
+in your feature support or step definitions.
+
+
+== running the example features
+
+Make sure the ruote and cucumber gems are installed and run
+
+  cucumber
+
+
+== author
+
+John Mettraux
+http://jmettraux.wordpress.com
 
 
 == license

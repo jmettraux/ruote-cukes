@@ -1,9 +1,9 @@
 
-Feature: running the flow
+Feature: I launch the flow
 
-  whatever...
+  the process definition is embedded in the feature
 
-  Scenario: from a to b
+  Scenario: alpha to bravo
     Given I have a ruote engine
     And the initial fields are "customer":"Alain"
     And the catchall participant is registered

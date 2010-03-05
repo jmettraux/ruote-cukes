@@ -1,12 +1,12 @@
 
-Feature: no sleep till bravo
+Feature: When I reply with the workitem
 
-  till bravo
+  a step definition for letting a workitem resume in its flow
 
-  Scenario: from alpha to bravo
+  Scenario: alpha to bravo
     Given I have a ruote engine
     And the catchall participant is registered
-    When I launch the flow at example_flows/a_to_b.rb
+    When I launch the flow at flows/a_to_b.rb
     Then the process should reach alpha
     When I get the first workitem of alpha
     And I reply with the workitem

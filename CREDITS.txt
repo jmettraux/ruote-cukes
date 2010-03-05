@@ -6,3 +6,6 @@ John Mettraux - http://jmettraux.wordpress.com
 Nicholas Faiz - http://github.com/biv
 Kenneth Kalmer - http://github.com/kennethkalmer
 
+
+Many thanks to the authors of Cucumber : http://cukes.info/
+

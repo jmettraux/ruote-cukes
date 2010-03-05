@@ -123,6 +123,11 @@ Then /I should have a workitem/ do
   assert_not_nil Ruote::Cukes.workitem
 end
 
+When /^I reply with the workitem$/ do
+
+  Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
+end
+
 
 #
 # PROCESSES

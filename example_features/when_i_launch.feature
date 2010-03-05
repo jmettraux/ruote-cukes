@@ -1,7 +1,7 @@
 
 Feature: when I launch...
 
-  somewhere in a distant galaxy
+  A long time ago in a galaxy far, far away
 
   Scenario: from alpha to bravo
     Given I have a ruote engine

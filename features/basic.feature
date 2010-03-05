@@ -5,7 +5,6 @@ Feature: basic
 
   Scenario: from a to b
     Given I have a ruote engine
-    And the initial fields are "customer":"Alain"
     And the catchall participant is registered
     And I launch the flow at flows/a_to_b.rb
     When I get the first workitem of participant alpha

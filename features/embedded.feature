@@ -5,7 +5,6 @@ Feature: I launch the flow
 
   Scenario: alpha to bravo
     Given I have a ruote engine
-    And the initial fields are "customer":"Alain"
     And the catchall participant is registered
     And I launch the flow
       """

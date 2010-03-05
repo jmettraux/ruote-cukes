@@ -33,6 +33,7 @@ require 'ruote'
 require 'ruote/cukes/version'
 
 
+#
 # a variable container in a singleton, or something like that
 #
 module Ruote::Cukes
@@ -47,12 +48,19 @@ module Ruote::Cukes
       super
     end
   end
+end
 
-  def self.parse_json (s)
+#
+# re-opening the cucumber table class to add a fancy to_hash method
+#
+class Cucumber::Ast::Table
 
-    s = "{#{s}}" unless s.match(/^{.+}$/)
+  def to_hash
 
-    Rufus::Json.decode(s)
+    self.raw.inject({}) do |h, (k, v)|
+      h[k] = (Rufus::Json.decode(v) rescue v)
+      h
+    end
   end
 end
 
@@ -70,14 +78,14 @@ end
 #
 # LAUNCH
 
-Given /the initial fields are (.+)$/ do |fields|
+Given /the initial fields are$/ do |table|
 
-  Ruote::Cukes.launch_fields = Ruote::Cukes.parse_json(fields)
+  Ruote::Cukes.launch_fields = table.to_hash
 end
 
-Given /the initial variables are (.+)$/ do |variables|
+Given /the initial variables are (.+)$/ do |table|
 
-  Ruote::Cukes.launch_variables = Ruote::Cukes.parse_json(variables)
+  Ruote::Cukes.launch_variables = table.to_hash
 end
 
 Given /I launch the flow at (.+)$/ do |path|
@@ -131,16 +139,14 @@ When /^I reply with the workitem$/ do
   Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
 end
 
-When /^I update the workitem with (.+)$/ do |fields|
+When /^I update the workitem with$/ do |table|
 
-  fields = Ruote::Cukes.parse_json(fields)
-
-  Ruote::Cukes.workitem.fields.merge!(fields)
+  Ruote::Cukes.workitem.fields.merge!(table.to_hash)
 end
 
-Then /^the workitem (?:fields )?should include (.+)$/ do |fields|
+Then /^the workitem (?:fields )?should include$/ do |table|
 
-  fields = Ruote::Cukes.parse_json(fields)
+  fields = table.to_hash
 
   assert_nil fields.find { |k, v|
     Ruote::Cukes.workitem.fields[k] != v

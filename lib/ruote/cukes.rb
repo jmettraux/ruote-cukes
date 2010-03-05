@@ -125,6 +125,11 @@ end
 #
 # PROCESSES
 
+Then /^the process should be alive$/ do
+
+  assert_not_nil Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid)
+end
+
 Then /^the process should have no errors$/ do
 
   assert_equal [], Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid).errors

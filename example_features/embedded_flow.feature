@@ -1,7 +1,7 @@
 
 Feature: running the flow
 
-  In order to blah
+  whatever...
 
   Scenario: from a to b
     Given I have a ruote engine

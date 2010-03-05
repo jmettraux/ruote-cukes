@@ -106,7 +106,7 @@ Given /the catch[- ]?all participant is registered/ do
     # due to a bug in ruote 2.1.7, remove when 2.1.8 is out
 end
 
-When /I get the first workitem of participant (.+)$/ do |pname|
+Given /I get the first workitem of participant (.+)$/ do |pname|
 
   Ruote::Cukes.workitem =
     Ruote::Cukes.storage_participant.by_participant(pname).first
@@ -133,5 +133,12 @@ end
 Then /^the process should have no errors$/ do
 
   assert_equal [], Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid).errors
+end
+
+Then /^the process should reach (participant )?(.+)$/ do |_, pname|
+
+  assert_not_nil Ruote::Cukes.storage_participant.all.find { |wi|
+    wi.fei.wfid == Ruote::Cukes.last_wfid && wi.participant_name == pname
+  }
 end
 

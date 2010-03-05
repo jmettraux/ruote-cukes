@@ -48,6 +48,17 @@ module Ruote::Cukes
       super
     end
   end
+
+  def self.workitem
+
+    if wi = @vars['workitem']
+      return wi
+    end
+
+    wi = @vars['storage_participant'].first
+
+    @vars['workitem'] = wi
+  end
 end
 
 #
@@ -132,6 +143,7 @@ end
 When /^I reply with the workitem$/ do
 
   Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
+  Ruote::Cukes.workitem = nil
 end
 
 When /^I update the workitem with$/ do |table|

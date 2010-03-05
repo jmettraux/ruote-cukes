@@ -1,4 +1,7 @@
 
+[o] use tables for field input
+[o] "When I update the workitem with" should do storage_participant.first if
+    there is no workitem present
+
 [ ] something about participants
-[ ] use tables for field input
 

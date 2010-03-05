@@ -1,6 +1,14 @@
 
 = ruote-cukes
 
+cucumber helpers (steps) for testing ruote process definitions and participants.
+
+
+== running the example
+
+  cucumber example_features/
+
+
 == license
 
 MIT

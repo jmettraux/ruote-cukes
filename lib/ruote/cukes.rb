@@ -23,14 +23,19 @@
 #++
 
 
+require 'test/unit/assertions'
+include Test::Unit::Assertions
+  # not sure about that for now...
+
 require 'json'
 require 'ruote'
+
+require 'ruote/cukes/version'
 
 
 # a variable container in a singleton, or something like that
 #
-module Ruote
-module Cukes
+module Ruote::Cukes
 
   def self.method_missing (m, *args)
     m = m.to_s
@@ -42,7 +47,6 @@ module Cukes
       super
     end
   end
-end
 end
 
 
@@ -78,7 +82,7 @@ Given /I launch the flow at (.+)$/ do |path|
   Ruote::Cukes.last_wfid = Ruote::Cukes.engine.launch(
     path,
     Ruote::Cukes.launch_fields || {},
-    Ruote::Cukes.lannch_variables || {})
+    Ruote::Cukes.launch_variables || {})
 end
 
 
@@ -89,6 +93,9 @@ Given /the catch[- ]?all participant is registered/ do
 
   Ruote::Cukes.storage_participant =
     Ruote::Cukes.engine.register_participant('.+', Ruote::StorageParticipant)
+
+  Ruote::Cukes.storage_participant.context = Ruote::Cukes.engine.context
+    # due to a bug in ruote 2.1.7, remove when 2.1.8 is out
 end
 
 When /I get the first workitem of participant (.+)$/ do |pname|
@@ -103,6 +110,6 @@ end
 
 Then /I should have a workitem/ do
 
-  Ruote::Cukes.workitem.should.not.be.nil
+  assert_not_nil Ruote::Cukes.workitem
 end
 

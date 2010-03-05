@@ -108,6 +108,8 @@ end
 
 Given /I get the first workitem of participant (.+)$/ do |pname|
 
+  sleep 0.100 # give some time to the engine
+
   Ruote::Cukes.workitem =
     Ruote::Cukes.storage_participant.by_participant(pname).first
 end
@@ -136,6 +138,8 @@ Then /^the process should have no errors$/ do
 end
 
 Then /^the process should reach (participant )?(.+)$/ do |_, pname|
+
+  sleep 0.100 # give some time to the engine
 
   assert_not_nil Ruote::Cukes.storage_participant.all.find { |wi|
     wi.fei.wfid == Ruote::Cukes.last_wfid && wi.participant_name == pname

@@ -22,6 +22,8 @@ Cucumber helpers (steps) for testing ruote process definitions and participants.
     And I reply with the workitem
     Then the process should reach charly
 
+Note the usage of two columns cucumber tables for storing fields (or variables). The first column hold the keys, while the second one the values.
+
 Look at features/ for the whole range of examples.
 
 
@@ -34,6 +36,27 @@ then make sure to include
   require 'ruote-cukes'
 
 in your feature support or step definitions.
+
+
+== complex fields
+
+When using cucumber tables to represent fields (or variables), ruote-cukes will always try to decode the values via JSON. This thus becomes possible :
+
+  Scenario: alpha to bravo
+    Given I have a ruote engine
+    And the catchall participant is registered
+    And the initial fields are
+      | targets | ["alice","bob"] |
+    When I launch the flow
+      """
+      Ruote.process_definition do
+        concurrent_iterator :on_field => 'targets', :to_f => 'f' do
+          participant :ref => '${f:f}'
+        end
+      end
+      """
+    Then the process should reach alice
+    And the process should reach bob
 
 
 == running the example features

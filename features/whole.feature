@@ -1,7 +1,7 @@
 
-= ruote-cukes
+Feature: ruote-cukes features
 
-Cucumber helpers (steps) for testing ruote process definitions and participants.
+  showing a rather complete example
 
   Scenario: alpha to bravo
     Given I have a ruote engine
@@ -21,35 +21,4 @@ Cucumber helpers (steps) for testing ruote process definitions and participants.
       | next | charly |
     And I reply with the workitem
     Then the process should reach charly
-
-Look at features/ for the whole range of examples.
-
-
-== using them
-
-  gem install ruote-cukes
-
-then make sure to include
-
-  require 'ruote-cukes'
-
-in your feature support or step definitions.
-
-
-== running the example features
-
-Make sure the ruote and cucumber gems are installed and run
-
-  cucumber
-
-
-== author
-
-John Mettraux
-http://jmettraux.wordpress.com
-
-
-== license
-
-MIT
 

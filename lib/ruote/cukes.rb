@@ -82,7 +82,31 @@ end
 Given /I have a ruote engine/ do
 
   Ruote::Cukes.engine =
-    Ruote::Engine.new(Ruote::Worker.new(Ruote::HashStorage.new()))
+    Ruote::Engine.new(
+      Ruote::Worker.new(
+        Ruote::HashStorage.new(
+          's_logger' => [ 'ruote/log/test_logger', 'Ruote::TestLogger' ])))
+end
+
+
+#
+# PARTICIPANTS
+
+Given /the catch[- ]?all participant is registered/ do
+
+  Ruote::Cukes.storage_participant =
+    Ruote::Cukes.engine.register_participant('.+', Ruote::StorageParticipant)
+
+  Ruote::Cukes.storage_participant.context = Ruote::Cukes.engine.context
+    # due to a bug in ruote 2.1.7, remove when 2.1.8 is out
+end
+
+Given /I get the first workitem of (?:participant )?(.+)$/ do |pname|
+
+  sleep 0.100 # give some time to the engine
+
+  Ruote::Cukes.workitem =
+    Ruote::Cukes.storage_participant.by_participant(pname).first
 end
 
 
@@ -113,27 +137,6 @@ Given /I launch the flow$/ do |process_definition|
     process_definition,
     Ruote::Cukes.launch_fields || {},
     Ruote::Cukes.launch_variables || {})
-end
-
-
-#
-# PARTICIPANTS
-
-Given /the catch[- ]?all participant is registered/ do
-
-  Ruote::Cukes.storage_participant =
-    Ruote::Cukes.engine.register_participant('.+', Ruote::StorageParticipant)
-
-  Ruote::Cukes.storage_participant.context = Ruote::Cukes.engine.context
-    # due to a bug in ruote 2.1.7, remove when 2.1.8 is out
-end
-
-Given /I get the first workitem of (?:participant )?(.+)$/ do |pname|
-
-  sleep 0.100 # give some time to the engine
-
-  Ruote::Cukes.workitem =
-    Ruote::Cukes.storage_participant.by_participant(pname).first
 end
 
 
@@ -199,10 +202,11 @@ end
 
 Then /^the process should be over$/ do
 
-  # TODO : check that the process has RUN, the assertion is currently
-  #        OK with processes that never ran.
-
   sleep 0.100 # give some time to the engine
+
+  assert_not_nil Ruote::Cukes.engine.context.logger.log.find do |r|
+    r['action'] == 'terminated' && r['wfid'] == Ruote::Cukes.last_wfid
+  end
 
   assert_nil Ruote::Cukes.engine.process(Ruote::Cukes.last_wfid)
 end

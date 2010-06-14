@@ -23,7 +23,7 @@ cucumber helpers (steps) for testing ruote process definitions and participants
     gem.rubyforge_project = 'ruote'
     #gem.test_file = 'test/test.rb'
 
-    gem.add_dependency 'ruote', '>= 2.1.7'
+    gem.add_dependency 'ruote', '>= 2.1.9'
     gem.add_dependency 'cucumber'
 
     gem.add_development_dependency 'rake'

@@ -143,9 +143,9 @@ end
 #
 # WORKITEMS
 
-When /^I reply with the workitem$/ do
+When /^I proceed with the workitem$/ do
 
-  Ruote::Cukes.storage_participant.reply(Ruote::Cukes.workitem)
+  Ruote::Cukes.storage_participant.proceed(Ruote::Cukes.workitem)
   Ruote::Cukes.workitem = nil
 end
 
@@ -154,11 +154,11 @@ When /^I update the workitem with$/ do |table|
   Ruote::Cukes.workitem.fields.merge!(table.to_hash)
 end
 
-When /^I reply$/ do
+When /^I proceed$/ do
 
   sleep 0.100 # give some time to the engine
 
-  Ruote::Cukes.storage_participant.reply(
+  Ruote::Cukes.storage_participant.proceed(
     Ruote::Cukes.storage_participant.all.first)
 end
 
